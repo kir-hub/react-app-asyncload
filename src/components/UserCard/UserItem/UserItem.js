@@ -6,7 +6,7 @@ export default class UserItem extends Component {
   constructor(props) {
     super(props);
     this.state={
-      isPicked: false
+      
     };
 
       
@@ -28,6 +28,7 @@ render() {
       <div >
         {this.state.isPicked ? alert( `${name.first} ${name.last}`) : 'off'}
         <img  src={imgSrc} />
+        <div> {`${email}`}</div>
         <div>{`${name.first} ${name.last}`}</div>
         <div>{`Telephone number: ${phone}`}</div>
         <div>{`${location.country}, ${location.city}`}</div>

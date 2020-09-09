@@ -49,7 +49,7 @@ class FormLogin extends Component {
           value={userEmail}
           onChange={this.handleEmailChange}
           placeholder="user email"
-          className={styles.input}
+          className={passStyleClass}
         />
         <input
           type="password"

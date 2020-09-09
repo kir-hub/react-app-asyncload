@@ -4,6 +4,19 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import UserItem from '../UserItem/UserItem'
 
+// if (error) {
+//   return <div> error: {this.state.length > 0 && this.mapUsers} {error.message}</div>;
+// } else if (!isLoaded) {
+// return <div> load... {this.state.length > 0 && this.mapUsers}</div>;
+// } else {
+//   return (
+//     <ul>
+//         {this.mapUsers()}
+//       {users.map((email) => (
+//         <li key={email.name}>{currentPage}</li>
+//       ))}
+//     </ul>
+
 class PageUsers extends Component {
   constructor(props) {
     super(props);
@@ -44,12 +57,7 @@ class PageUsers extends Component {
     }
   };
 
-  mapUsers = () => {
-     
-    return this.state.users.map((user) => (
-      <UserItem {...user} key={user.email}  />
-    ));
-  };
+  
 
   loadUsers = () => {
     const { currentPage } = this.state;
@@ -60,7 +68,9 @@ class PageUsers extends Component {
         this.setState({
           users: data.results,
           isLoaded: false,
+          
         });
+        console.log(data.results);
       })
       .catch((error) => {
         this.setState({
@@ -70,36 +80,37 @@ class PageUsers extends Component {
       });
   };
 
+mapUsers = () => {     
+    return this.state.users.map((user) => {
+      return <UserItem {...user} key={user.email}/>;
+    });
+    };
+      
   componentDidMount() {
-    this.fetchUsers();
-    //this.loadUsers();
+    //this.fetchUsers();
+    this.loadUsers();
     
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.currentPage !== this.state.currentPage) {
       this.loadUsers();
+      //this.fetchUsers();
     }
   }
 
   render() {
     const { error, isLoaded, users } = this.state;
     const { currentPage } = this.props;
-    if (error) {
-      return <div> error: {this.state.length > 0 && this.mapUsers} {error.message}</div>;
-    } else if (!isLoaded) {
-    return <div> load... {this.state.length > 0 && this.mapUsers}</div>;
-    } else {
-      return (
-        <ul>
-            {this.mapUsers()}
-          {users.map((email) => (
-            <li key={email.name}>{currentPage}</li>
-          ))}
-        </ul>
-      );
+    return(
+    <div>
+
+      {this.state.users.length > 0 && this.mapUsers()}
+    </div>  
+    )
+      
     }
-  }
+  
 }
 
 export default PageUsers;
